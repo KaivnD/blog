@@ -1,8 +1,5 @@
 .sidebar
   //- 默认参数 true
-  if !page.posts && (theme.toc === undefind || theme.toc === true)
-    include ./toc
-
   if theme.link === undefind || theme.link === true
     h2 Links
     .sidebar__link
@@ -26,4 +23,7 @@
     h2 Tags
     .sidebar__tags
       != list_tags({show_count: false})
+
+  if !page.posts && (theme.toc === undefind || theme.toc === true)
+    include ./toc
 
