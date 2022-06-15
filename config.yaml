@@ -3,3 +3,10 @@ languageCode: 'zh-CN'
 defaultContentLanguage: cn
 hasCJKLanguage: true
 title: KaivnDebug
+theme: hugo-book
+markup:
+  tableOfContents:
+    endLevel: 4
+params:
+  BookTheme: 'auto'
+  BookMenuBundle: '/menu'
