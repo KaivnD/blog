@@ -1,0 +1,5 @@
+baseURL: 'https://blog.kvd.ink/'
+languageCode: 'zh-CN'
+defaultContentLanguage: cn
+hasCJKLanguage: true
+title: KaivnDebug
