@@ -2,11 +2,18 @@ baseURL: 'https://blog.kvd.ink/'
 languageCode: 'zh-CN'
 defaultContentLanguage: cn
 hasCJKLanguage: true
-title: KaivnDebug
+title: KvDebug
 theme: hugo-book
+menu:
+  before:
+    - identifier: posts
+      name: Posts
+      url: /posts
+    - identifier: about
+      name: About
+      url: /about
 markup:
   tableOfContents:
     endLevel: 4
 params:
   BookTheme: 'auto'
-  BookMenuBundle: '/menu'
