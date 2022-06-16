@@ -1,3 +1,18 @@
-{{- $mainJSFile := printf "%s.main.js" .Language.Lang }}
-{{- $mainJS := resources.Get "main.js" | resources.ExecuteAsTemplate $mainJSFile . | resources.Minify | resources.Fingerprint }}
-<script type="module" defer src="{{ $mainJS.RelPermalink }}" integrity="{{ $mainJS.Data.Integrity }}"></script>
+{{- $mainJSFile := printf "%s.main.js" .Language.Lang }} {{- $mainJS :=
+resources.Get "main.js" | resources.ExecuteAsTemplate $mainJSFile . |
+resources.Minify | resources.Fingerprint }}
+<script
+  type="module"
+  defer
+  src="{{ $mainJS.RelPermalink }}"
+  integrity="{{ $mainJS.Data.Integrity }}"
+></script>
+<script>
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?dcd324ce83f3b7c667583057e99319bf";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+</script>
