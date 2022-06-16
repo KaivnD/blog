@@ -53,6 +53,8 @@ jobs:
           # 非必配项，若采用STS临时授权方式访问OSS需要配置该项。stsToken生成方式参考临时访问凭证
       
       - name: Upload to Ali OSS
-        run: ossutil cp -rf public oss://kvdev/
+        run: |
+          ossutil rm -rf oss://kvdev/*
+          ossutil cp -rf public oss://kvdev/
         
       
