@@ -1,8 +1,8 @@
 ---
-title: "Python 起步"
+title: "Python起步"
 date: 2022-06-15T00:58:24+08:00
 tags: ["python"]
-summary: python 快速起步
+summary: python快速起步
 ---
 
 {{< hint info >}}
