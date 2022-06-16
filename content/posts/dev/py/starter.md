@@ -1,10 +1,14 @@
 ---
 title: "Python 起步"
 date: 2022-06-15T00:58:24+08:00
-draft: true
 tags: ["python"]
 summary: python 快速起步
 ---
+
+{{< hint info >}}
+**注意**  
+如果没有安装开发环境，请参照[安装开发环境](/posts/dev/py/dev-env)
+{{< /hint >}}
 
 ## Part 1 变量与序列
 
@@ -44,12 +48,12 @@ g, h = 3, 6
 
 在 Python 中一共有四种序列，可以用来表示一系列的值
 
+{{< details "扩展内容" >}}
 1. 列表（List）是一种有序且可更改的集合，允许重复的元素。
 2. 字典（Dictionary）是一个无序，可变和有索引的集合，没有重复的元素。
 3. 元组（Tuple）是一种有序且不可更改的集合，允许重复的元素。
 4. 集合（Set）是一个无序且无索引的集合，没有重复的元素。
-
-<!-- TODO 增删查改四个类型的能力 -->
+{{< /details >}}
 
 #### 1.2.1 列表
 
@@ -104,6 +108,7 @@ alist[1:] # 表示提取从第一个开始一直到最后一个
 
 **修改**
 赋值
+
 ```py
 # 2号位置赋值为9
 alist[2] = 9
@@ -127,20 +132,13 @@ building = {
 
 字典虽然是无序的，但是列表是键值对的映射，所以可以通过索引键名取值，也可以赋值
 
-```py
-# 取值
-building['name']
-# 输出： xx大楼
-
-# 修改
-building['height'] = 72
-```
+**新增**
 
 ```py
 # 也可以直接设置一个新的键值对，值可以是任意类型，
-# 这里将'levels'设置为一个列表，列表里有两个level
-# 这里的level又是一个新的字典
-building['levels'] = [
+# 这里将'floors'设置为一个列表，列表里有两个floor
+# 这里的floor又是一个新的字典
+building['floors'] = [
     {
         'name': 'L0',
         'height': 3
@@ -150,7 +148,26 @@ building['levels'] = [
         'height': 4.5
     }
 ]
-# 输出： {'name': 'xx大楼', 'type': '公建', 'height': 72, 'levels': [{'name': 'L0', 'height': 3}, {'name': 'L1', 'height': 4.5}]}
+# 输出： {'name': 'xx大楼', 'type': '公建', 'height': 72, 'floors': [{'name': 'L0', 'height': 3}, {'name': 'L1', 'height': 4.5}]}
+```
+
+**删除**
+```py
+del building['name']
+del building['floors']
+
+{'type': '公建', 'height': 99}
+```
+
+**取值**
+```py
+building['name']
+# 输出： xx大楼
+```
+
+**修改**
+```py
+building['height'] = 72
 ```
 
 #### 1.2.3 元组
@@ -183,14 +200,22 @@ t2 = 'hi', True, 6, 7.5
 
 因为元组是有序的，所以可以通过索引符号取值，但是不能为元组的某一项进行再一次赋值，不能删除，是只读的
 
+**取值**
 ```py
 # 元组也可以通过索引符号取值
 c[1]
 # 输出： 2
+```
 
+{{< hint warning >}}
+**注意**  
+由于只能从元组里取值，故以下修改，删除是错误的写法，也不能在元组声明后新增新的元组元素
+```py
 # 但是不能赋值，如下表达式就是错误的，因为元组不可更改
 c[1] = 3
+del c[0]
 ```
+{{< /hint >}}
 
 #### 1.2.4 集合
 
@@ -212,18 +237,49 @@ s2 = {2, 3, 1, 4, 3, 1, 6, 2}
 # 输出： {1, 2, 3, 4, 6}
 ```
 
-可以利用这个特性给列表元素去重，如果不在意顺序的话：
-
+**新增**
 ```py
-list2 = ['a', 3, 1, 4, 3, 1, 6, 2]
-# set(...)可以把列表变成集合
-s3 = set(list2)
-# list(...)可以把集合变成列表
-list3 = list(s3)
-# 输出： [1, 2, 3, 4, 6, 'a']
+s2.add(9)
+s2.add(3)
+# 输出：{1, 2, 3, 4, 6, 9}
 ```
 
-其中 [`set(...)`](https://docs.python.org/3/library/functions.html#func-set) 和 [`list(...)`](https://docs.python.org/3/library/functions.html#func-list) 是 Python 的内建功能，可用于不同类型数据之间的转换
+**删除**
+```py
+s2.remove(3)
+# 输出: {1, 2, 4, 6, 9}
+```
+
+{{< hint info >}}
+**Tip**  
+集合创建后元素不能被被修改
+{{< /hint >}}
+
+{{< hint info >}}
+**Tip**  
+集合没有可以直接查询集合内元素的方法，但是可以通过遍历获取，参照[循环遍历](#32-循环遍历-for)
+{{< /hint >}}
+
+{{< details "扩展内容" >}}
+#### 集合的运算
+
+```py
+a = {'a', 'b', 3, 'c', 'd', 5}
+b = {'1', 'a', 4, 'd', 2}
+
+a - b  # a 和 b 的差集
+# 输出：{'c', 3, 'b', 5}
+
+a | b  # a 和 b 的并集
+# 输出：{'c', 2, 3, 4, 5, 'b', 'd', '1', 'a'}
+
+a & b  # a 和 b 的交集
+# 输出：{'a', 'd'}
+
+a ^ b  # a 和 b 中不同时存在的元素
+# 输出：{2, 3, 4, 5, 'c', 'b', '1'}
+```
+{{< /details >}}
 
 ## Part 2 函数与表达
 
@@ -411,9 +467,8 @@ def f(a, b, c):
 
 #### 三元表达式
 
-<!-- TODO 深化一下 -->
-
-三元表达式可在简短的语句内完成有条件的变量声明，Python中没有和其他语言一样的三元表达式，但是有代替的写法，如下：
+三元表达式可在简短的语句内完成有条件的变量声明，Python 中没有和其他语言一样的三元表达式，但是有代替的写法：
+**形式：** `A if C else B`，其中，当`C`成立（值为True）时，值为`A`，否则值为`B`，`A, B, C` 就叫做三元
 
 ```py
 # 变量number
@@ -422,10 +477,7 @@ number = 12
 number_type = '偶数' if number % 2 == 0 else '奇数'
 ```
 
-{{< hint info >}}
-**Tip**
-这里的三元表达式读成一句话就是，number_type的值是偶数如果number除以2的余数等于0的话，否则就是奇数
-{{< /hint >}}
+上述表达式中，`'偶数' if number % 2 == 0 else '奇数'`就是三元表达式，读成一句话就是，这个表达式的值是偶数如果 number 除以 2 的余数等于 0 的话，否则就是奇数。
 
 {{< / details >}}
 
@@ -484,7 +536,7 @@ for i in range(0, 10, 2):
 #### 3.2.2 遍历列表
 
 遍历列表就是起一个变量，代表列表中的每一个元素，对元素进行操作。
-如下程序，将a列表里不是偶数的放到b列表中
+如下程序，将 a 列表里不是偶数的放到 b 列表中
 
 ```py
 a = [3, 5, 2, 6, 7, 9, 11, 23]
@@ -501,13 +553,16 @@ print(b)
 其中，`for`代码块内的变量`item`就被看成是列表中的每一个元素
 
 {{< details "扩展内容" >}}
-#### 另一种写法
+
+#### 列表解析
+
 上述程序可用[列表解析](https://peps.python.org/pep-0202/)更简短的表达
 
 ```py
 a = [3, 5, 2, 6, 7, 9, 11, 23]
 b = [item for item in a if item % 2 != 0]
 ```
+
 {{< /details >}}
 
 有时候我们需要，同时遍历索引和值可以这么写：
@@ -533,6 +588,7 @@ for i in range(len(a)):
 > Python 的一个内建功能，在这里是列表长度
 
 {{< details "扩展内容" >}}
+
 #### 另一种写法
 
 ```py
@@ -543,8 +599,7 @@ for i, val in enumerate(a):
 
 > [`enumerate(...)`](https://docs.python.org/3/library/functions.html#enumerate)函数
 > Python 的一个内建功能，获取可迭代对象的迭代器，对于这里的列表而言，迭代器就是一个索引和值组成的元组
-{{< /details >}}
-
+> {{< /details >}}
 
 #### 3.2.3 遍历字典
 
@@ -601,7 +656,8 @@ for item in building.items():
 ('height', 99)
 """
 ```
-可以看出，这个item是个元组，那我们可以使用[元组赋值](#123-元组)的方式起两个变量：
+
+可以看出，这个 item 是个元组，那我们可以使用[元组赋值](#123-元组)的方式起两个变量：
 
 ```py
 for key, val in building.items():
@@ -616,7 +672,7 @@ height 99
 
 #### 3.2.4 跳过 continue
 
-回到遍历数组那个例子，这里描述的是当`item`不是偶数的时候把item放到列表b里，
+回到遍历数组那个例子，这里描述的是当`item`不是偶数的时候把 item 放到列表 b 里，
 反过来就是，如果`item`是奇数，就**跳过**这次循环，**继续**下次循环，这就是`continue`，如下示例：
 
 ```py
@@ -636,7 +692,8 @@ print(b)
 #### 3.2.5 跳出 break
 
 跳出和跳过是完全不一样的作用，跳出表示终止一层循环，比方说：
-在一串字符中找到第一个字母`n`是字符串的第几个字母，如果找到了，后续的循环都是没有必要的，可以直接break
+在一串字符中找到第一个字母`n`是字符串的第几个字母，如果找到了，后续的循环都是没有必要的，可以直接 break
+
 ```py
 words = 'Hi noah!'
 
@@ -662,7 +719,9 @@ else:
 > Python 的一个内建功能，将变量转为字符串类型
 
 {{< details "扩展内容" >}}
+
 #### 字符串拼接
+
 由于字符串可看作不可变有序的一种序列，所以可以使用`+`进行连接，单这种方式比较笨拙，容易阅读。
 可用[Advanced String Formatting](https://peps.python.org/pep-3101/)，简化此过程。
 
@@ -684,7 +743,7 @@ while True:
     print('never ends loop!')
 ```
 
-`while`就是当条件满足的时候，执行while代码块，这类循环通常在当你需要在某个条件不满足时才停止的循环，或者不确定循环多少次的循环，比如：
+`while`就是当条件满足的时候，执行 while 代码块，这类循环通常在当你需要在某个条件不满足时才停止的循环，或者不确定循环多少次的循环，比如：
 
 ```py
 
@@ -706,6 +765,7 @@ while i < 6:
 ```
 
 也可以写成
+
 ```py
 i = 0
 while True:
@@ -716,23 +776,24 @@ while True:
 ```
 
 {{< details "扩展内容" >}}
-#### Python赋值运算符
+
+#### Python 赋值运算符
 
 ```py
 i = 0
 i += 1 # 相当于 i = i + 1，也就是说，旧的i值加1赋值给新的i
 ```
 
-|符号|名称|
-|:-:|:-:|
-|=|赋值运算符|
-|+=|加法赋值运算符|
-|-=|减法赋值运算符|
-|*=|乘法赋值运算符|
-|/=|除法赋值运算符|
-|%=|取模赋值运算符|
-|**=|幂赋值运算符|
-|//=|取整除赋值运算符|
+| 符号  |       名称       |
+| :---: | :--------------: |
+|   =   |    赋值运算符    |
+|  +=   |  加法赋值运算符  |
+|  -=   |  减法赋值运算符  |
+|  \*=  |  乘法赋值运算符  |
+|  /=   |  除法赋值运算符  |
+|  %=   |  取模赋值运算符  |
+| \*\*= |   幂赋值运算符   |
+|  //=  | 取整除赋值运算符 |
 
 {{< /details >}}
 
@@ -796,7 +857,7 @@ except:
 比方说这里`try`内的流程是为了取到某个值，然后赋值给这个`try`代码块外的变量，
 那么当遇到异常的时候，应该考虑使用另一种方法来，来计算这个值。
 
-另，这个`except`部分并没有变量表示我们在f函数里抛出来的错误信息，我们可以这样来获取：
+另，这个`except`部分并没有变量表示我们在 f 函数里抛出来的错误信息，我们可以这样来获取：
 
 ```py
 try:
@@ -811,10 +872,11 @@ except Exception as err:
 ```
 
 {{< details "扩展内容" >}}
+
 #### 多种异常的捕捉
 
-我们知道，二元一次方程，的第一元，二次方的常数部分如果是0的话，就相当于是一元一次方程了。
-所以在这个函数的设定下，我们也可以认为a为0是一种异常
+我们知道，二元一次方程，的第一元，二次方的常数部分如果是 0 的话，就相当于是一元一次方程了。
+所以在这个函数的设定下，我们也可以认为 a 为 0 是一种异常
 
 ```py
 def f(a, b, c):
@@ -867,6 +929,7 @@ finally:
 `with`语句使用来缩短`try...finally...`的语法。举个常用的例子，从硬盘读取要一个文件，通常需要这么写：
 
 1. 不捕捉异常
+
 ```py
 file = open("/path/to/file.txt")
 data = file.read()
@@ -874,6 +937,7 @@ file.close()
 ```
 
 2. 捕捉异常
+
 ```py
 file = open("/path/to/file.txt")
 try:
@@ -882,7 +946,7 @@ finally:
     file.close()
 ```
 
-也就是说，我们通过python从硬盘里读取一个文件完毕后时需要调用close取关闭这个文件，告诉系统你对这个文件已经使用完了。
+也就是说，我们通过 python 从硬盘里读取一个文件完毕后时需要调用 close 取关闭这个文件，告诉系统你对这个文件已经使用完了。
 假设，在读取的过程遇到异常，如果使用第一种写法在执行到`file.read()`到时候直接抛出异常，那就以为着整个程序瞬间结束，
 `file.close()`压根儿没有机会执行，所以你这时候使用我们刚学的知识，可以使用`try...finally...`管你遇不遇到异常，
 都要执行这个`file.close()`，也就是说，就算在读取文件的时候遇到异常，文件也可以被正确关闭。但是这么写，太长了，太复杂，
@@ -894,13 +958,13 @@ with open("/path/to/file.txt") as f:
 ```
 
 > 简短且安全的完成文件读取
-{{< /details >}}
+> {{< /details >}}
 
 ## Part 4 对象与模块
 
 使用抽象思维建立一些模块可以使得程序变得更容易阅读，充分分离各个功能组团，可以使代码复用率提升。
 有效的模块封装可以让自己写的功能更容易在多个项目中使用，同时也可以在社区获取别的大神所创造的功能，
-丰富的功能模块，使得Python更强大。
+丰富的功能模块，使得 Python 更强大。
 
 ### 4.1 面对对象编程
 
@@ -920,7 +984,7 @@ building = {
     'name': 'xx大楼',
     'type': '公建',
     'height': 99,
-    'levels': [
+    'floors': [
         {
             'name': 'L0',
             'height': 3
@@ -940,7 +1004,7 @@ building = {
 3. 把值代进去创建一个建筑物的过程叫**实例化**
 4. 每一个属性都是这个类的**成员**，这里的名称，类型，高度，楼层都是变量，所以又叫做**成员变量**或者**成员属性**
 
-下面我们用Python把这个模版表示出来：
+下面我们用 Python 把这个模版表示出来：
 
 ```py
 # 声明一个名为Building的class
@@ -956,14 +1020,14 @@ class Building:
         self.name = name
         #通过.操作符，可以用访问self的成员
         self.type = buildingt_type
-        self.levels = []
+        self.floors = []
 
     '''
     定义一个增加楼层的方法（函数），class的成员函数一般被称为方法，
-    这个方法，用来增加一个楼层，将会改变levels成员的值
+    这个方法，用来增加一个楼层，将会改变floors成员的值
     '''
-    def addLevel(self, name, height):
-        self.levels.append((name, height))
+    def addFloor(self, name, height):
+        self.floors.append((name, height))
 
     '''
     定义一个方法来获取这栋楼的高度，因为楼的高度是随着楼层的改变而改变，
@@ -977,10 +1041,10 @@ class Building:
         height = 0
 
         # 遍历每一个楼层
-        for level in self.levels:
+        for floor in self.floors:
             # 把楼层高度通过加法赋值累加到height变量
-            height += level[1]
-        
+            height += floor[1]
+
         # 返回所有楼层高度之和
         return height
 ```
@@ -989,21 +1053,23 @@ class Building:
 
 上述模版仅仅只是规定了`Building`这个对象长什么样，相当于是一个**模具**，需要拿到生产线加工才能得到**对象**。
 
-1. 案例A
+1. 案例 A
+
 ```py
 # 起一个变量名为building，构造一个名称为xx大楼，类型为公建的Building的实例
 building = Building("xx大楼", "公建")
-# 调用building的addLevel方法为Building增加一层名为L0，高度为4.5的楼层
-building.addLevel("L0", 4.5)
-# 调用building的addLevel方法为Building增加一层名为L1，高度为3的楼层
-building.addLevel("L1", 3)
+# 调用building的addFloor方法为Building增加一层名为L0，高度为4.5的楼层
+building.addFloor("L0", 4.5)
+# 调用building的addFloor方法为Building增加一层名为L1，高度为3的楼层
+building.addFloor("L1", 3)
 
 # 获取building的高度
 print(building.height)
 # 输出：4.5
 ```
 
-2. 案例B
+2. 案例 B
+
 ```py
 # 起一个名为buildings的空列表
 buildings = []
@@ -1014,14 +1080,558 @@ for i in range(10):
 
     # 第二层循环用于给每一个building增加一定数量的楼层
     for j in range(6):
-        level = "L" + str(j)
-        building.addLevel(level, 3)
+        floor = "L" + str(j)
+        building.addFloor(floor, 3)
 
     buildings.append(building)
 
 # 这样以来，就可以有一系列的建筑物储存在一个列表当中
 for building in buildings:
-    print("{}楼", building)
+    print("[{}楼] 有{}m高，一共有{}层".format(building.name, building.height, len(building.floors)))
+
+"""
+输出：
+[#1楼] 有18m高，一共有6层
+[#2楼] 有18m高，一共有6层
+[#3楼] 有18m高，一共有6层
+[#4楼] 有18m高，一共有6层
+[#5楼] 有18m高，一共有6层
+[#6楼] 有18m高，一共有6层
+[#7楼] 有18m高，一共有6层
+[#8楼] 有18m高，一共有6层
+[#9楼] 有18m高，一共有6层
+[#10楼] 有18m高，一共有6层
+"""
 ```
 
+{{< hint info >}}
+**Tips**  
+**字符串拼接** `"{}，{}".format(var1, var2)` 这种格式是常用的字符串拼接形式，可以方便灵活完成拼接，保证字符串模板和变量分离。 参照[Advanced String Formatting](https://peps.python.org/pep-3101/)
+{{< /hint >}}
+
+#### 4.1.3 Building class
+
+经过前面对 Building 对象的描述，可以发现还是有些缺陷，比如说缺少对楼层的抽象，缺少楼层具体形状。
+这一小节，重新来对 Building 对象进行完善。
+声明一个 Floor 的 class，用来做建筑的楼层的模板
+
+```py
+# 声明一个楼层的模板，包含三个属性，名称，高度，和边界，用于描述楼层的形状
+class Floor:
+    def __init__(self, name, height, bound):
+        self.name = name
+        self.height = height
+        self.bound = bound
+
+# 摘自上文的Building 去掉了一些暂时用不到的东西
+class Building:
+    def __init__(self, name, buildingt_type):
+        self.name = name
+        self.type = buildingt_type
+        self.floors = []
+
+    """
+    使用跟简洁的写法来求总楼高，sum函数可以对数组进行求和。
+    这个只包含楼层高度的数组的写法，详见3.2.2 遍历列表的扩展内容。
+    """
+    @property
+    def height(self):
+        return sum([floor.height for floor in self.floors])
+```
+
+上面的程序缺失了部分内容，就是`Floor`的`bound`，应该是个多边形，来描述楼层的具体形状。
+一个多边形，由多个点组成，这里我们抽象一个多边形`Polyline2d`的模板，用元组来储存多边形的各个点，
+我们甚至还可以写一个函数，求解多边形的面积。
+
+```py
+class Polyline2d:
+    """
+    构造一个多边形，包含一个pts属性，用于储存多边形的各个顶点
+    """
+    def __init__(self):
+        self.pts = []
+
+    """
+    add 方法传入两个值，一个x坐标，一个y坐标
+    """
+    def add(self, x, y):
+        # 用元组的形式，把x坐标和y坐标打包成一个数据，储存到self.pts属性内
+        self.pts.append((x, y))
+
+    """
+    鞋带公式求解已知多边形所有顶点的情况的多边形面积，详见https://www.101computing.net/the-shoelace-algorithm/
+    """
+    @property
+    def area(self):
+        s1 = 0
+        s2 = 0
+        cnt = len(self.pts)
+
+        for i in range(cnt - 1):
+            s1 += self.pts[i][0] * self.pts[i+1][1]
+            s2 += self.pts[i][1] * self.pts[i+1][0]
+
+        s1 += self.pts[cnt-1][0] * self.pts[0][1]
+        s2 += self.pts[0][0] * self.pts[cnt-1][1]
+
+        return abs(s1 - s2) / 2
+```
+
+这样以来，我们除了直接得到建筑物的总高度以外，还可以得到总面积。
+为 Building 增加计算总面积的属性
+
+```py
+class Building:
+    #...省略...
+
+    @property
+    def area(self):
+        return sum([floor.bound.area for floor in self.floors])
+```
+
+我们可以为 class 提供转换为字符串的方法，这样在 print 的时候以一个固定格式显示变量，看起来方便一些。
+
+```py
+class Floor:
+    #...省略...
+    def __str__(self) -> str:
+        return "{}       {}     {:.2f}".format(self.name, self.height, self.bound.area)
+
+class Building:
+    #...省略...
+    def __str__(self) -> str:
+        levels = "\n-------------------------\n".join([str(floor) for floor in self.floors])
+        return """-------------------------
+建筑名称：{}
+建筑类型：{}
+建筑高度：{} m
+建筑层数：{} 层
+建筑面积：{:.2f} m²
+
+楼层    层高    面积
+-------------------------
+{}
+-------------------------""".format(self.name, self.type, self.height, len(self.floors), self.area, levels)
+```
+
+{{< hint info >}}
+**Tips**  
+**跨行字符串** 三个引号可表示跨行字符串。
+{{< /hint >}}
+
+这样一来一个粗糙的`Building`就实现了，在这个基础之上可以深入设计更多的功能，就目前的成果，试一下效果：
+
+```py
+# 假设我们有这一组顶点，作为楼层的形状多边形的顶点。
+pts = [
+    (8.1, -9.483704),
+    (8.1, -11.378272),
+    (-8.1, -11.378272),
+    (-8.1, -9.483704),
+    (-16.2, -9.483704),
+    (-16.2, 1.67),
+    (-6.8, 1.67),
+    (-6.8, 3.4),
+    (-1.5, 3.4),
+    (-1.5, -1.8),
+    (1.5, -1.8),
+    (1.5, 3.4),
+    (6.8, 3.4),
+    (6.8, 1.67),
+    (16.2, 1.67),
+    (16.2, -9.483704),
+    (8.1, -9.483704),
+    (8.1, -9.483704)
+]
+
+# 创建一个多边形
+pl = Polyline2d()
+
+# 把顶点数组的所有顶点添加到多边形中
+for x, y in pts:
+    pl.add(x, y)
+
+# 创建一个建筑实例
+building = Building("xx大楼", "公建")
+
+# 楼层信息
+floor_heights = [4.5, 3, 3, 4.8, 3, 3]
+
+# 一次性创建6个一样的楼层
+for i, height in enumerate(floor_heights):
+    floor = Floor("F{}".format(i + 1), height, pl)
+    building.floors.append(floor)
+
+print(building)
+
+"""
+输出：
+(base) kaivnd@KaivnDdeMacBook-Pro blog % python test.py
+-------------------------
+建筑名称：xx大楼
+建筑类型：公建
+建筑高度：21.3 m
+建筑层数：6 层
+建筑面积：2400.00 m²
+
+楼层    层高    面积
+-------------------------
+F1       4.5     400.00
+-------------------------
+F2       3       400.00
+-------------------------
+F3       3       400.00
+-------------------------
+F4       4.8     400.00
+-------------------------
+F5       3       400.00
+-------------------------
+F6       3       400.00
+-------------------------
+"""
+```
+
+{{< details "合在一起" >}}
+
+```py
+class Polyline2d:
+    """
+    构造一个多边形，包含一个pts属性，用于储存多边形的各个顶点
+    """
+    def __init__(self):
+        self.pts = []
+
+    """
+    add 方法传入两个值，一个x坐标，一个y坐标
+    """
+    def add(self, x, y):
+        # 用元组的形式，把x坐标和y坐标打包成一个数据，储存到self.pts属性内
+        self.pts.append((x, y))
+
+    """
+    鞋带公式求解已知多边形所有顶点的情况的多边形面积，详见https://www.101computing.net/the-shoelace-algorithm/
+    """
+    @property
+    def area(self):
+        s1 = 0
+        s2 = 0
+        cnt = len(self.pts)
+
+        for i in range(cnt - 1):
+            s1 += self.pts[i][0] * self.pts[i+1][1]
+            s2 += self.pts[i][1] * self.pts[i+1][0]
+
+        s1 += self.pts[cnt-1][0] * self.pts[0][1]
+        s2 += self.pts[0][0] * self.pts[cnt-1][1]
+
+        return abs(s1 - s2) / 2
+
+# 声明一个楼层的模板，包含三个属性，名称，高度，和边界，用于描述楼层的形状
+class Floor:
+    def __init__(self, name, height, bound):
+        self.name = name
+        self.height = height
+        self.bound = bound
+
+    def __str__(self) -> str:
+        return "{}       {}     {:.2f}".format(self.name, self.height, self.bound.area)
+
+# 摘自上文的Building 去掉了一些暂时用不到的东西
+class Building:
+    def __init__(self, name, buildingt_type):
+        self.name = name
+        self.type = buildingt_type
+        self.floors = []
+
+    def __str__(self) -> str:
+        levels = "\n-------------------------\n".join([str(floor) for floor in self.floors])
+        return """-------------------------
+建筑名称：{}
+建筑类型：{}
+建筑高度：{} m
+建筑层数：{} 层
+建筑面积：{:.2f} m²
+
+楼层    层高    面积
+-------------------------
+{}
+-------------------------""".format(self.name, self.type, self.height, len(self.floors), self.area, levels)
+
+    """
+    使用跟简洁的写法来求总楼高，sum函数可以对数组进行求和。
+    这个只包含楼层高度的数组的写法，详见3.2.2 遍历列表的扩展内容。
+    """
+    @property
+    def height(self):
+        return sum([floor.height for floor in self.floors])
+
+    @property
+    def area(self):
+        return sum([floor.bound.area for floor in self.floors])
+
+
+# 假设我们有这一组顶点，作为楼层的形状多边形的顶点。
+pts = [
+    (8.1, -9.483704),
+    (8.1, -11.378272),
+    (-8.1, -11.378272),
+    (-8.1, -9.483704),
+    (-16.2, -9.483704),
+    (-16.2, 1.67),
+    (-6.8, 1.67),
+    (-6.8, 3.4),
+    (-1.5, 3.4),
+    (-1.5, -1.8),
+    (1.5, -1.8),
+    (1.5, 3.4),
+    (6.8, 3.4),
+    (6.8, 1.67),
+    (16.2, 1.67),
+    (16.2, -9.483704),
+    (8.1, -9.483704),
+    (8.1, -9.483704)
+]
+
+# 创建一个多边形
+pl = Polyline2d()
+
+# 把顶点数组的所有顶点添加到多边形中
+for x, y in pts:
+    pl.add(x, y)
+
+# 创建一个建筑实例
+building = Building("xx大楼", "公建")
+
+# 楼层信息
+floor_heights = [4.5, 3, 3, 4.8, 3, 3]
+
+# 一次性创建6个一样的楼层
+for i, height in enumerate(floor_heights):
+    floor = Floor("F{}".format(i + 1), height, pl)
+    building.floors.append(floor)
+
+print(building)
+```
+
+{{< /details >}}
+
 ### 4.2 模块
+
+用一句话讲明白模块就是，把代码组织在相应文件，相应的包里，这样一来，
+可以做到问题细分，任务细分。在改某个功能的时候，专注于这个功能，
+没有必要把一个程序文件写老长，维护起来很麻烦。可以把一些已经固定用途的功能，
+放到一个包内，提供给团队，或者上传至网络上与大家分享，这样一来，即做到自己省心，
+又做到大家省心，多棒！
+
+#### 4.2.1 代码组织
+
+上一节内容我们最后把所有的代码放到了一个文件里，在这一届可以做一个简单的代码组织练习。
+
+第一个文件用来保存几何图形的代码
+
+```py
+"""
+@file geometry.py
+"""
+class Polyline2d:
+    """
+    构造一个多边形，包含一个pts属性，用于储存多边形的各个顶点
+    """
+    def __init__(self):
+        self.pts = []
+
+    """
+    add 方法传入两个值，一个x坐标，一个y坐标
+    """
+    def add(self, x, y):
+        # 用元组的形式，把x坐标和y坐标打包成一个数据，储存到self.pts属性内
+        self.pts.append((x, y))
+
+    """
+    鞋带公式求解已知多边形所有顶点的情况的多边形面积，详见https://www.101computing.net/the-shoelace-algorithm/
+    """
+    @property
+    def area(self):
+        s1 = 0
+        s2 = 0
+        cnt = len(self.pts)
+
+        for i in range(cnt - 1):
+            s1 += self.pts[i][0] * self.pts[i+1][1]
+            s2 += self.pts[i][1] * self.pts[i+1][0]
+
+        s1 += self.pts[cnt-1][0] * self.pts[0][1]
+        s2 += self.pts[0][0] * self.pts[cnt-1][1]
+
+        return abs(s1 - s2) / 2
+```
+
+第二个文件用来保存建筑物相关的代码
+
+```py
+"""
+@file building.py
+"""
+class Floor:
+    def __init__(self, name, height, bound):
+        self.name = name
+        self.height = height
+        self.bound = bound
+
+    def __str__(self) -> str:
+        return "{}       {}     {:.2f}".format(self.name, self.height, self.bound.area)
+
+
+class Building:
+    def __init__(self, name, buildingt_type):
+        self.name = name
+        self.type = buildingt_type
+        self.floors = []
+
+    def __str__(self) -> str:
+        levels = "\n-------------------------\n".join([str(floor) for floor in self.floors])
+        return """-------------------------
+建筑名称：{}
+建筑类型：{}
+建筑高度：{} m
+建筑层数：{} 层
+建筑面积：{:.2f} m²
+
+楼层    层高    面积
+-------------------------
+{}
+-------------------------""".format(self.name, self.type, self.height, len(self.floors), self.area, levels)
+
+    """
+    使用跟简洁的写法来求总楼高，sum函数可以对数组进行求和。
+    这个只包含楼层高度的数组的写法，详见3.2.2 遍历列表的扩展内容。
+    """
+    @property
+    def height(self):
+        return sum([floor.height for floor in self.floors])
+
+    @property
+    def area(self):
+        return sum([floor.bound.area for floor in self.floors])
+```
+
+第三个文件用来保存主程序代码
+
+```py
+"""
+@file main.py
+"""
+# 假设我们有这一组顶点，作为楼层的形状多边形的顶点。
+pts = [
+    (8.1, -9.483704),
+    (8.1, -11.378272),
+    (-8.1, -11.378272),
+    (-8.1, -9.483704),
+    (-16.2, -9.483704),
+    (-16.2, 1.67),
+    (-6.8, 1.67),
+    (-6.8, 3.4),
+    (-1.5, 3.4),
+    (-1.5, -1.8),
+    (1.5, -1.8),
+    (1.5, 3.4),
+    (6.8, 3.4),
+    (6.8, 1.67),
+    (16.2, 1.67),
+    (16.2, -9.483704),
+    (8.1, -9.483704),
+    (8.1, -9.483704)
+]
+
+# 创建一个多边形
+pl = Polyline2d()
+
+# 把顶点数组的所有顶点添加到多边形中
+for x, y in pts:
+    pl.add(x, y)
+
+# 创建一个建筑实例
+building = Building("xx大楼", "公建")
+
+# 楼层信息
+floor_heights = [4.5, 3, 3, 4.8, 3, 3]
+
+# 一次性创建6个一样的楼层
+for i, height in enumerate(floor_heights):
+    floor = Floor("F{}".format(i + 1), height, pl)
+    building.floors.append(floor)
+
+print(building)
+```
+
+把这三个文件放到同一个文件夹里，尝试执行`python main.py`，得到以下错误：
+
+```bash
+(base) kaivnd@KaivnDdeMacBook-Pro blog % python test.py
+Traceback (most recent call last):
+  File "main.py", line 27, in <module>
+    pl = Polyline2d()
+NameError: name 'Polyline2d' is not defined
+```
+
+很显然，这个`main.py`文件内使用的 class `Polyline2d` 以及别的 class，都被我们移动到另一个文件了。
+
+#### 4.2.2 import 语句
+
+通过`import`语句把丢失的`class` “找”回来，`import`一般写在文件开头，
+有以下几种常用写法：
+
+- `import geometry` 这样是把整个 geometry 文件当成一个模块导入进来，使用方法如下
+
+```py
+import geometry
+
+# ...省略...
+
+# 创建一个多边形
+pl = geometry.Polyline2d()
+```
+
+- `import geometry as g` 这样和上面一样，只不过是给`geometry`起了个新名字`g`
+
+```py
+import geometry as g
+
+# ...省略...
+
+# 创建一个多边形
+pl = g.Polyline2d()
+```
+
+- `from geometry import Polyline2d` 这样的导入是直接导入需要用的类型、函数、或者变量
+
+```py
+from geometry import Polyline2d
+
+# ...省略...
+
+# 创建一个多边形
+pl = Polyline2d()
+```
+
+我们将缺失的`class`的`import`补全，`main.py`文件的开头就变成这样子
+
+```py
+"""
+@file main.py
+"""
+from geometry import Polyline2d
+from building import Floor, Building
+# ...省略...
+```
+
+这样一来，一个简单的代码组织工作就做完了。
+
+```bash
+├─example
+│  ├─building.py # 建筑信息模块
+│  ├─geometry.py # 几何图形模块
+│  └─main.py # 主程序
+```
+
+{{< button href="/archive/py-starter-example.zip" >}}下载代码{{< /button >}}
