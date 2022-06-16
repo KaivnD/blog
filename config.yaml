@@ -15,5 +15,9 @@ menu:
 markup:
   tableOfContents:
     endLevel: 4
+  highlight:
+    lineNos: true
+    lineNumbersInTable: false
+    style: monokai
 params:
   BookTheme: 'auto'
