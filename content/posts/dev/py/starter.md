@@ -7,7 +7,7 @@ summary: python快速起步
 
 {{< hint info >}}
 **注意**  
-如果没有安装开发环境，请参照[安装开发环境](/posts/dev/py/dev-env)
+如果没有安装开发环境，请参照[安装开发环境](/posts/dev/py/env)
 {{< /hint >}}
 
 ## Part 1 变量与序列
