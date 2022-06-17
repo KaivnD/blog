@@ -12,12 +12,17 @@ menu:
     - identifier: about
       name: About
       url: /about
+    - identifier: email
+      name: Send Email
+      url: mailto:KaivnD@hotmail.com
+    - identifier: github
+      name: Github
+      url: https://github.com/KaivnD/blog
+
 markup:
   tableOfContents:
     endLevel: 4
   highlight:
-    lineNos: true
-    lineNumbersInTable: false
     style: monokai
 params:
   BookTheme: 'auto'
