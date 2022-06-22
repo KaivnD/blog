@@ -2,7 +2,7 @@ baseURL: 'https://blog.kvd.ink/'
 languageCode: 'zh-CN'
 defaultContentLanguage: cn
 hasCJKLanguage: true
-title: KvDebug
+title: KvDev
 theme: hugo-book
 menu:
   before:
@@ -18,8 +18,12 @@ menu:
     - identifier: github
       name: Github
       url: https://github.com/KaivnD/blog
-
+disablePathToLower: true
+enableGitInfo: true
 markup:
+  goldmark:
+    renderer:
+      unsafe: true
   tableOfContents:
     endLevel: 4
   highlight:
