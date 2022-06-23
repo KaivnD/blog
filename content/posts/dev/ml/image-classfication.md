@@ -3,6 +3,7 @@ title: "使用Pytorch训练一个图像分类器"
 date: 2022-06-22T14:55:02+08:00
 tags: ["pytorch", "ml", "image-classfication"]
 summary: 训练一个图片分类器
+draft: true
 ---
 
 ## 逻辑编程
