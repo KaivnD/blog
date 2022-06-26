@@ -41,7 +41,7 @@ VSCode 是微软开发的多语言多平台集成开发环境，编辑器选这�
 
 - 设置环境变量
 
-{{< tabs "uniqueid" >}}
+{{< tabs "env-tabs" >}}
 {{< tab "Windows" >}}
 
 ## Windows
@@ -66,7 +66,7 @@ TODO
 
 - Shell 配置
 
-{{< tabs "uniqueid" >}}
+{{< tabs "shell-tabs" >}}
 {{< tab "Windows" >}}
 
 ## Windows
