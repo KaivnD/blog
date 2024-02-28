@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "hugo --minify",
+    "create": "hugo new",
+    "dev": "hugo server"
+  },
+  "devDependencies": {
+    "hugo-bin": "^0.120.4"
+  }
+}
