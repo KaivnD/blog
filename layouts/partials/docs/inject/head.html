@@ -1,6 +1,11 @@
 {{- $clipboardJSFile := printf "%s.clipboard.js" .Language.Lang }} {{- $clipboardJS :=
 resources.Get "js/clipboard.js" | resources.ExecuteAsTemplate $clipboardJSFile . |
 resources.Minify | resources.Fingerprint }}
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<!-- 自定义应用名称 -->
+<meta name="application-name" content="Onexen" />
 <script
   type="module"
   defer

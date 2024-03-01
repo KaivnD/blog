@@ -3,7 +3,7 @@
   "scripts": {
     "build": "exec-bin bin/hugo/hugo --minify",
     "create": "exec-bin bin/hugo/hugo new",
-    "dev": "exec-bin bin/hugo/hugo server",
+    "dev": "exec-bin bin/hugo/hugo server --bind=0.0.0.0",
     "postinstall": "hugo-installer --version 0.123.4 --extended"
   },
   "devDependencies": {

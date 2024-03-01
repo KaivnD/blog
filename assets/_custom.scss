@@ -3,11 +3,6 @@
 // @import "plugins/numbered";
 @import "plugins/scrollbars";
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, segoe ui, Roboto, Oxygen,
-    Ubuntu, Cantarell, open sans, helvetica neue, sans-serif;
-}
-
 :focus {
   outline: none;
 }
@@ -75,4 +70,8 @@ body {
 ::-webkit-scrollbar {
   height: 0.3em;
   width: 0.3em;
+}
+
+.medium-zoom-overlay {
+  background-color: rgba(0,0,0,0.8) !important;
 }
