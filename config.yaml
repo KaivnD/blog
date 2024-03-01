@@ -2,7 +2,7 @@ baseURL: 'https://blog.kvd.ink/'
 languageCode: 'zh-CN'
 defaultContentLanguage: cn
 hasCJKLanguage: true
-title: KvDev
+title: onexen
 theme: hugo-book
 menu:
   before:
@@ -30,3 +30,4 @@ markup:
     style: monokai
 params:
   BookTheme: 'auto'
+  BookSearch: true
