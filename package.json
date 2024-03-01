@@ -1,11 +1,13 @@
 {
   "private": true,
   "scripts": {
-    "build": "hugo --minify",
-    "create": "hugo new",
-    "dev": "hugo server"
+    "build": "exec-bin bin/hugo/hugo --minify",
+    "create": "exec-bin bin/hugo/hugo new",
+    "dev": "exec-bin bin/hugo/hugo server",
+    "postinstall": "hugo-installer --version 0.123.4 --extended"
   },
   "devDependencies": {
-    "hugo-bin": "^0.120.4"
+    "exec-bin": "^1.0.0",
+    "hugo-installer": "^4.0.1"
   }
 }
