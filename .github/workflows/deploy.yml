@@ -54,7 +54,7 @@ jobs:
       
       - name: Upload to Ali OSS
         run: |
-          ossutil rm -rf oss://kvdev/*
-          ossutil cp -rf public oss://kvdev/
+          ossutil rm -rf oss://onexen/*
+          ossutil cp -rf public oss://onexen/
         
       
